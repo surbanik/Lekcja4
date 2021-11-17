@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Car {
 /*
@@ -99,16 +100,20 @@ gdzie producentem jest BMW, z automatyczną skrzynią biegów oraz pojemnością
 //                }
 //            }
 //        }
+        List<Country> availableCountryList = new ArrayList<>();
         carList.stream()
-                .filter(c -> c.producent.model == "BMW")
+                .filter(c -> c.producent.model.equals("BMW"))
                 .filter(c -> c.isAutomaticGear)
                 .filter(c -> c.dimensions.trunkCapacity > 300)
                 .map(c -> c.market.countries)
-                .forEach(c -> {
-                    for (Country country : c) {
-                        System.out.println(country.countryName +" - " + country.countrySign);
-                    }
-                });
+                .forEach(availableCountryList::addAll);
+        if (availableCountryList.isEmpty()) {
+            System.out.println("No results");
+        } else {
+            for (Country country : availableCountryList) {
+                System.out.println(country.countryName + " - " + country.countrySign);
+            }
+        }
     }
 }
 
